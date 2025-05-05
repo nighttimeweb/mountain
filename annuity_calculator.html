@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annuity Payout Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #FFFFFF;
+            color: #333333;
+            margin: 0;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        h1 {
+            color: #2E8B57; /* SeaGreen */
+            text-align: center;
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .subtitle {
+            text-align: center;
+            color: #6B7280; /* gray-500 */
+            margin-bottom: 3rem;
+        }
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+        .input-column, .results-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        label {
+            display: block;
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* medium */
+            margin-bottom: 0.25rem;
+        }
+        .apy-display, .result-value {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: bold;
+            color: #3CB371; /* MediumSeaGreen */
+        }
+        input[type="number"], input[type="range"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #D1D5DB; /* gray-300 */
+            border-radius: 0.375rem; /* rounded */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+            box-sizing: border-box;
+        }
+        input[type="range"] {
+            height: 0.5rem;
+            background-color: #E5E7EB; /* gray-200 */
+            border-radius: 0.5rem; /* rounded-lg */
+            appearance: none;
+            cursor: pointer;
+            padding: 0;
+            accent-color: #3CB371; /* MediumSeaGreen */
+        }
+        /* Custom range slider thumb styles (optional, browser-specific) */
+        input[type=range]::-webkit-slider-thumb {
+            appearance: none;
+            width: 1rem;
+            height: 1rem;
+            background: #3CB371;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 1rem;
+            height: 1rem;
+            background: #3CB371;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .preset-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .preset-buttons button {
+            padding: 0.25rem 1rem;
+            border: 1px solid #3CB371;
+            border-radius: 0.375rem;
+            background-color: #FFFFFF;
+            color: #3CB371;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .preset-buttons button.active {
+            background-color: #3CB371;
+            color: #FFFFFF;
+        }
+        .duration-label {
+            text-align: center;
+            margin-top: 0.25rem;
+            color: #6B7280;
+        }
+        .apply-button {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            background-color: #2E8B57;
+            color: #FFFFFF;
+            font-weight: 600; /* semibold */
+            border: none;
+            cursor: pointer;
+        }
+        .results-display {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .result-label {
+            font-size: 0.875rem;
+            color: #4B5563; /* gray-700 */
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        .disclaimer {
+            font-size: 0.75rem; /* text-xs */
+            color: #6B7280;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Annuity Payout Calculator</h1>
+        <p class="subtitle">Estimate how your money can grow with our annuity payout calculator.</p>
+
+        <div class="grid">
+            <!-- Inputs Column -->
+            <div class="input-column">
+                <div>
+                    <label>APY (Rate varies by duration)</label>
+                    <div class="apy-display" id="apyDisplay">5.75%</div>
+                </div>
+
+                <div>
+                    <label for="investmentAmount">Investment amount ($1,000 - $1,000,000)</label>
+                    <input type="number" id="investmentAmount" value="50000" min="1000" max="1000000">
+                    <div class="preset-buttons">
+                        <button id="preset50k" class="active">$50,000</button>
+                        <button id="preset100k">$100,000</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="investmentDuration">Investment duration</label>
+                    <input type="range" id="investmentDuration" min="1" max="10" value="5">
+                    <div class="duration-label" id="durationLabel">5 years</div>
+                </div>
+
+                <button class="apply-button">Apply now</button>
+            </div>
+
+            <!-- Results and Chart Column -->
+            <div class="results-column">
+                <div class="results-display">
+                    <div>
+                        <div class="result-label">Total interest earned</div>
+                        <div class="result-value" id="totalInterest">$0.00</div>
+                    </div>
+                    <div>
+                        <div class="result-label">Projected account balance</div>
+                        <div class="result-value" id="projectedBalance">$0.00</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="projectionChart"></canvas>
+                </div>
+                <p class="disclaimer">Values displayed are for presentation purposes only and do not depict an actual investment.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const investmentAmountInput = document.getElementById('investmentAmount');
+        const investmentDurationInput = document.getElementById('investmentDuration');
+        const apyDisplay = document.getElementById('apyDisplay');
+        const durationLabel = document.getElementById('durationLabel');
+        const totalInterestDisplay = document.getElementById('totalInterest');
+        const projectedBalanceDisplay = document.getElementById('projectedBalance');
+        const preset50kButton = document.getElementById('preset50k');
+        const preset100kButton = document.getElementById('preset100k');
+        const ctx = document.getElementById('projectionChart').getContext('2d');
+
+        let projectionChart;
+
+        function getApyForDuration(duration) {
+            if (duration <= 2) {
+                return 5.25;
+            } else { // duration >= 3
+                return 5.75;
+            }
+        }
+
+        function formatCurrency(value) {
+            return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        }
+
+        function calculateProjection() {
+            let amount = parseFloat(investmentAmountInput.value);
+            const duration = parseInt(investmentDurationInput.value);
+
+            // Clamp amount
+            if (isNaN(amount) || amount < 1000) amount = 1000;
+            if (amount > 1000000) amount = 1000000;
+            // Update input visually if clamped, but avoid infinite loops
+            if (parseFloat(investmentAmountInput.value) !== amount) {
+                 // investmentAmountInput.value = amount; // Be careful with direct updates causing loops
+            }
+
+            const currentApy = getApyForDuration(duration);
+            apyDisplay.textContent = `${currentApy.toFixed(2)}%`;
+            durationLabel.textContent = `${duration} ${duration === 1 ? 'year' : 'years'}`;
+
+            let balance = amount;
+            const dataPoints = [{ year: 0, balance: balance }];
+            for (let year = 1; year <= duration; year++) {
+                balance = balance * (1 + currentApy / 100);
+                dataPoints.push({ year: year, balance: parseFloat(balance.toFixed(2)) });
+            }
+
+            const finalBalance = dataPoints[dataPoints.length - 1].balance;
+            const totalInterest = finalBalance - amount;
+
+            totalInterestDisplay.textContent = formatCurrency(totalInterest);
+            projectedBalanceDisplay.textContent = formatCurrency(finalBalance);
+
+            updateChart(dataPoints);
+            updatePresetButtons(amount);
+        }
+
+        function updateChart(data) {
+            const labels = data.map(p => p.year);
+            const balances = data.map(p => p.balance);
+
+            if (projectionChart) {
+                projectionChart.destroy();
+            }
+
+            projectionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Projected Balance',
+                        data: balances,
+                        borderColor: '#3CB371', // MediumSeaGreen
+                        backgroundColor: 'rgba(60, 179, 113, 0.2)', // Light green transparent area fill
+                        fill: true,
+                        tension: 0.1,
+                        pointBackgroundColor: '#3CB371',
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return '$' + (value / 1000).toFixed(0) + 'k';
+                                }
+                            }
+                        },
+                        x: {
+                           title: {
+                                display: true,
+                                text: 'Year'
+                           }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += formatCurrency(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updatePresetButtons(currentAmount) {
+             preset50kButton.classList.toggle('active', currentAmount === 50000);
+             preset100kButton.classList.toggle('active', currentAmount === 100000);
+        }
+
+        // Event Listeners
+        investmentAmountInput.addEventListener('input', calculateProjection);
+        investmentAmountInput.addEventListener('change', () => { // Handle clamping on blur/change
+             let amount = parseFloat(investmentAmountInput.value);
+             if (isNaN(amount) || amount < 1000) investmentAmountInput.value = 1000;
+             if (amount > 1000000) investmentAmountInput.value = 1000000;
+             calculateProjection(); // Recalculate after potential clamping
+        });
+        investmentDurationInput.addEventListener('input', calculateProjection);
+
+        preset50kButton.addEventListener('click', () => {
+            investmentAmountInput.value = 50000;
+            calculateProjection();
+        });
+
+        preset100kButton.addEventListener('click', () => {
+            investmentAmountInput.value = 100000;
+            calculateProjection();
+        });
+
+        // Initial calculation on load
+        document.addEventListener('DOMContentLoaded', calculateProjection);
+
+    </script>
+</body>
+</html>
+
