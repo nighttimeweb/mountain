@@ -15,6 +15,200 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <style>
+    /* --- Header (Desktop & Global) --- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 15px 0;
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--transition-medium), border-color var(--transition-medium);
+}
+
+.site-header.scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid var(--grey-medium);
+}
+
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-header .logo a {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-decoration: none;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+}
+
+.main-nav ul li {
+  margin-left: 30px;
+}
+
+.main-nav ul li a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--charcoal);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.main-nav ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--green-primary);
+  transition: width var(--transition-medium);
+}
+
+.main-nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* --- Dropdown (Desktop Only) --- */
+.has-dropdown {
+position: relative;
+}
+
+.has-dropdown .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--green-light); /* Light green tint */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 12px; /* Slightly more rounded */
+  min-width: 200px;
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+
+.has-dropdown:hover .dropdown {
+display: block;
+}
+
+.has-dropdown .dropdown li {
+margin: 0;
+}
+
+.has-dropdown .dropdown li a {
+display: block;
+padding: 10px 20px;
+color: var(--charcoal);
+font-weight: 500;
+white-space: nowrap;
+}
+
+.has-dropdown .dropdown li a:hover {
+background-color: var(--green-light);
+color: var(--green-dark);
+}
+
+/* --- Mobile Header Adjustments --- */
+@media (max-width: 768px) {
+.site-header {
+  padding: 10px 0;
+}
+
+.site-header .container {
+  display: grid;
+  grid-template-areas:
+    "logo toggle"
+    "nav nav";
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.site-header .logo {
+  grid-area: logo;
+}
+
+.nav-toggle {
+  grid-area: toggle;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-toggle .bar {
+  height: 2px;
+  width: 100%;
+  background-color: var(--green-dark);
+  border-radius: 1px;
+}
+
+.main-nav {
+  grid-area: nav;
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.main-nav.open {
+  display: block;
+}
+
+.main-nav ul {
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.main-nav ul li {
+  margin-left: 0;
+}
+
+.site-header .logo a {
+  font-size: 1.5rem;
+}
+
+/* Mobile dropdown overrides */
+.has-dropdown .dropdown {
+  position: static;
+  transform: none;
+  opacity: 1;
+  box-shadow: none;
+  background-color: transparent;
+  padding: 0;
+  display: none;
+}
+
+.has-dropdown.open .dropdown {
+  display: block;
+}
+
+.has-dropdown .dropdown li a {
+  padding: 8px 0;
+  color: var(--charcoal);
+  font-size: 0.95rem;
+}
+}
+
 /* === Annuity Calculator Styles === */
 
 body {
@@ -165,44 +359,6 @@ footer.site-footer {
 .footer-meta a:hover {
   text-decoration: underline;
 }
-/* --- Dropdown Fix --- */
-.has-dropdown {
-  position: relative;
-}
-
-.has-dropdown .dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: var(--white);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-  border-radius: 6px;
-  min-width: 200px;
-  padding: 0;
-  z-index: 1000;
-}
-
-.has-dropdown:hover .dropdown {
-  display: block;
-}
-
-.has-dropdown .dropdown li {
-  margin: 0;
-}
-
-.has-dropdown .dropdown li a {
-  display: block;
-  padding: 10px 20px;
-  color: var(--charcoal);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.has-dropdown .dropdown li a:hover {
-  background-color: var(--green-light);
-  color: var(--green-dark);
-}
 
 </style>
 <body>
@@ -244,6 +400,8 @@ footer.site-footer {
           </nav>
         </div>
       </header>
+      
+  
   <main>
     <div class="card" style="margin-top: 100px;">
       <h1>Annuity Payout Calculator</h1>
