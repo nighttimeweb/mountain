@@ -721,6 +721,39 @@ section {
     color: var(--green-primary);
 }
 
+.social-links {
+    margin-top: 30px;
+}
+
+.linkedin-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #0077B5;
+    color: #fff !important;
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
+}
+
+.linkedin-button:hover {
+    background-color: #005582;
+    color: #fff !important; /* Enforce white on hover */
+    transform: translateY(-2px);
+}
+
+.linkedin-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 2px;
+}
+
 /* --- FAQ Section as Cards in Two Columns --- */
 .faq-section h2 {
     text-align: center;
