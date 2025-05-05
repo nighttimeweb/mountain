@@ -359,6 +359,50 @@ footer.site-footer {
 .footer-meta a:hover {
   text-decoration: underline;
 }
+@media (max-width: 768px) {
+  .card {
+    margin: 1rem auto;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 90%;
+  }
+
+  .results-display {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
+  canvas#projectionChart {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  input[type="number"] {
+    font-size: 1rem;
+  }
+
+  input[type="range"] {
+    width: 100%;
+  }
+
+  .apy-display,
+  .result-value {
+    font-size: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+}
 
 </style>
 <body>
