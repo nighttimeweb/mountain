@@ -77,41 +77,46 @@ document.addEventListener("DOMContentLoaded", function () {
       observer.observe(statsSection);
     }
   
-    // 5. Mobile Navigation
-    const navToggle = document.querySelector(".nav-toggle");
-    const mainNav = document.querySelector(".main-nav");
-    if (navToggle && mainNav) {
-      navToggle.addEventListener("click", () => {
-        mainNav.classList.toggle("open");
-      });
-    }
-  // 6. Mobile Dropdown Toggle
-document.querySelectorAll('[data-dropdown]').forEach(drop => {
-  const link = drop.querySelector('a');
+   // 5. Mobile Navigation Toggle
+const navToggle = document.querySelector(".nav-toggle");
+const mainNav = document.querySelector(".main-nav");
 
-  link.addEventListener('click', (e) => {
-    if (window.innerWidth <= 768) {
-      e.preventDefault(); // Prevent default anchor behavior
+if (navToggle && mainNav) {
+  navToggle.addEventListener("click", () => {
+    mainNav.classList.toggle("open");
+  });
+}
+
+// 6. Mobile Dropdown Toggle
+if (window.innerWidth <= 768) {
+  document.querySelectorAll('[data-dropdown]').forEach(drop => {
+    const link = drop.querySelector('a');
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent link jump
       drop.classList.toggle('open');
 
-      // Optional: close other open dropdowns
+      // Close other open dropdowns
       document.querySelectorAll('[data-dropdown]').forEach(other => {
         if (other !== drop) {
           other.classList.remove('open');
         }
       });
+    });
+  });
+
+  // 7. Close dropdowns when clicking outside (safe)
+  document.addEventListener('click', (e) => {
+    const isDropdown = e.target.closest('[data-dropdown]');
+    const isInsideNav = e.target.closest('.main-nav');
+
+    if (!isDropdown && isInsideNav) {
+      document.querySelectorAll('[data-dropdown]').forEach(drop => {
+        drop.classList.remove('open');
+      });
     }
   });
-});
-
-// Close dropdowns when clicking outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('[data-dropdown]')) {
-    document.querySelectorAll('[data-dropdown]').forEach(drop => {
-      drop.classList.remove('open');
-    });
-  }
-});
+}
 
     // 6. Sync details by row
     function syncDetailsByRow(containerSelector, itemSelector) {
