@@ -288,69 +288,77 @@ color: var(--green-dark);
 
 /* --- Hero Section --- */
 .hero {
-    position: relative;
-    height: 100vh; /* Full viewport height */
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--white);
-    background: url('placeholder-hero-modern.jpg') no-repeat center center/cover; /* Placeholder */
-    /* Add actual image later */
-    overflow: hidden;
+  position: relative;
+  height: 100vh; /* Full viewport height */
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white);
+  overflow: hidden;
+  /* background removed — now handled by <video> element */
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
 .hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(26, 77, 46, 0.6), rgba(26, 77, 46, 0.3)); /* Green gradient overlay */
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(26, 77, 46, 0.6), rgba(26, 77, 46, 0.3)); /* Green gradient overlay */
+  z-index: 1;
 }
 
 .hero-content {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 }
 
 .hero h1 {
-    color: var(--white);
-    margin-bottom: 0.5em;
-    font-weight: 700;
-    /* Animation handled by JS */
+  color: var(--white);
+  margin-bottom: 0.5em;
+  font-weight: 700;
+  /* Animation handled by JS */
 }
 
 .hero .tagline {
-    font-size: 1.3rem;
-    margin-bottom: 2em;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.95); /* Brighter white for contrast */
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow to boost visibility */
+  font-size: 1.3rem;
+  margin-bottom: 2em;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95); /* Brighter white for contrast */
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow to boost visibility */
 }
 
-
 .cta-button {
-    display: inline-block;
-    background: linear-gradient(45deg, var(--green-primary), #27ae60); /* Gradient green */
-    color: var(--white);
-    padding: 15px 35px;
-    border-radius: 50px; /* Pill shape */
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform var(--transition-fast), box-shadow var(--transition-medium);
-    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
-    border: none;
-    cursor: pointer;
+  display: inline-block;
+  background: linear-gradient(45deg, var(--green-primary), #27ae60); /* Gradient green */
+  color: var(--white);
+  padding: 15px 35px;
+  border-radius: 50px; /* Pill shape */
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-medium);
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+  border: none;
+  cursor: pointer;
 }
 
 .cta-button:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5);
-    color: var(--white);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5);
+  color: var(--white);
 }
 
 /* --- Content Sections --- */
