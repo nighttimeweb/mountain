@@ -1085,7 +1085,347 @@ section {
         margin: 0 auto;
     }
 }
+/* === Annuity Calculator Styles === */
+.annuity-calculator-wrapper {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4fdf7;
+  color: #1A4D2E;
+  padding: 2rem;
+  box-sizing: border-box;
+}
 
+.annuity-calculator-wrapper .card {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 100px auto;
+}
+
+.annuity-calculator-wrapper h1 {
+  color: #1A4D2E;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.annuity-calculator-wrapper .subtitle {
+  text-align: center;
+  color: #6B7280;
+  margin-bottom: 3rem;
+}
+
+.annuity-calculator-wrapper .grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .annuity-calculator-wrapper .grid {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.annuity-calculator-wrapper .input-column,
+.annuity-calculator-wrapper .results-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.annuity-calculator-wrapper label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.annuity-calculator-wrapper input[type="number"],
+.annuity-calculator-wrapper input[type="range"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.annuity-calculator-wrapper input[type="range"] {
+  height: 0.5rem;
+  background-color: #e2e8f0;
+  border-radius: 0.5rem;
+  appearance: none;
+  cursor: pointer;
+  accent-color: #1A4D2E;
+}
+
+.annuity-calculator-wrapper input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background: #1A4D2E;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.annuity-calculator-wrapper input[type="range"]::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  background: #1A4D2E;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.annuity-calculator-wrapper .apy-display,
+.annuity-calculator-wrapper .result-value {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #1A4D2E;
+}
+
+.annuity-calculator-wrapper .duration-label {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: #6B7280;
+}
+
+.annuity-calculator-wrapper .results-display {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.annuity-calculator-wrapper .result-label {
+  font-size: 0.875rem;
+  color: #4B5563;
+}
+
+.annuity-calculator-wrapper .chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.annuity-calculator-wrapper .disclaimer {
+  font-size: 0.75rem;
+  color: #6B7280;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .annuity-calculator-wrapper .card {
+    margin: 1rem auto;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 90%;
+  }
+
+  .annuity-calculator-wrapper .results-display {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .annuity-calculator-wrapper .chart-container {
+    height: 250px;
+  }
+
+  canvas#projectionChart {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .annuity-calculator-wrapper input[type="number"] {
+    font-size: 1rem;
+  }
+
+  .annuity-calculator-wrapper input[type="range"] {
+    width: 100%;
+  }
+
+  .annuity-calculator-wrapper .apy-display,
+  .annuity-calculator-wrapper .result-value {
+    font-size: 1.5rem;
+  }
+
+  .annuity-calculator-wrapper h1 {
+    font-size: 1.5rem;
+  }
+
+  .annuity-calculator-wrapper .subtitle {
+    font-size: 1rem;
+  }
+}
+/* === New Quote Page Styles === */
+  
+/* === Quote Form Container as Card === */
+.quote-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.07);
+  padding: 60px 40px;
+  max-width: 920px;
+  margin: 60px auto;
+}
+
+/* === Clean Heading === */
+.quote-card h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1d4033;
+  margin-bottom: 40px;
+}
+
+/* === Grid Layout === */
+.wpcf7-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.half {
+  flex: 1 1 calc(50% - 10px);
+}
+
+/* === Inputs and Selects === */
+.form-group input,
+.form-group select {
+  padding: 14px 16px;
+  font-size: 1rem;
+  border: 1px solid #d6e3dc;
+  border-radius: 10px;
+  background-color: #f8faf9;
+  transition: border-color 0.3s ease, background-color 0.2s;
+  appearance: none;
+  font-family: inherit;
+}
+
+/* Custom dropdown arrow */
+.form-group select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2334a853'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px;
+}
+
+/* === Labels === */
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1f2e26;
+}
+
+/* === Radio Groups === */
+.radio-group,
+.tobacco-group {
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-left: 4px;
+  margin-top: -10px;
+}
+
+.radio-group label,
+.tobacco-group label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* === reCAPTCHA === */
+.g-recaptcha {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* === Submit Button === */
+.cta-button {
+  background-color: #34a853;
+  color: white;
+  border: none;
+  padding: 16px;
+  font-size: 1rem;
+  border-radius: 40px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 280px;
+  margin: 40px auto 0;
+  display: block;
+  box-shadow: 0 10px 20px rgba(52, 168, 83, 0.15);
+}
+
+.cta-button:hover {
+  background-color: #2e8b57;
+}
+/* === Thank You Modal === */
+.thank-you-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+}
+
+.thank-you-card {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.thank-you-card h2 {
+  font-size: 1.8rem;
+  color: #1d4033;
+  margin-bottom: 16px;
+}
+
+.thank-you-card p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+/* Fade animation */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+/* === End Quote Page Styles === */
 @media (max-width: 768px) {
     h1 { font-size: 2.2rem; }
     h2 { font-size: 1.8rem; }
@@ -1149,94 +1489,5 @@ section {
         flex-direction: column;
         gap: 20px;
     }
- /* === New Quote Page Styles === */
-
-body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fb;
-    color: #222;
+  
   }
-  
-  .quote-form {
-    padding: 80px 20px;
-    background: #ffffff;
-  }
-  
-  .quote-form h2 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 40px;
-    color: #2c3e50;
-  }
-  
-  .wpcf7-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  @media (min-width: 768px) {
-    .wpcf7-form {
-      grid-template-columns: 1fr 1fr;
-    }
-    .form-full {
-      grid-column: 1 / -1;
-    }
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #444;
-  }
-  
-  .form-group input,
-  .form-group select {
-    padding: 14px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  
-  .radio-group,
-  .tobacco-group {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .g-recaptcha {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  
-  .cta-button {
-    background-color: #2e8b57;
-    color: white;
-    border: none;
-    padding: 16px;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .cta-button:hover {
-    background-color: #246b45;
-  }
-  
-  /* === End Quote Page Styles === */
-  
-  
-}
-
