@@ -357,5 +357,21 @@ window.addEventListener("resize", () => {
     calculateProjection();
     investmentAmountInput.addEventListener("input", calculateProjection);
     investmentDurationInput.addEventListener("input", calculateProjection);
+  }   // --- Preloader ---
+  const preloader = document.querySelector('.preloader');
+  const progressFill = document.querySelector('.progress-fill');
+
+  if (preloader && progressFill) {
+    const start = performance.now();
+    window.addEventListener('load', () => {
+      const end = performance.now();
+      const loadTime = end - start;
+      const duration = Math.min(Math.max(loadTime, 400), 3000);
+      progressFill.style.transition = `width ${duration}ms linear`;
+      progressFill.style.width = '100%';
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+      }, duration);
+    });
   }
 });
