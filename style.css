@@ -299,7 +299,16 @@ color: var(--green-dark);
   overflow: hidden;
   /* background removed — now handled by <video> element */
 }
-
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* This is your overlay */
+  z-index: 1;
+}
 .hero-video {
   position: absolute;
   top: 0;
@@ -308,37 +317,42 @@ color: var(--green-dark);
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(rgba(26, 77, 46, 0.6), rgba(26, 77, 46, 0.3)); /* Green gradient overlay */
-  z-index: 1;
-}
+
 
 .hero-content {
   position: relative;
   z-index: 2;
+  text-align: center;
+  transform: translateY(-80px); /* 👈 Move text upward by 80px */
+  
 }
 
+
 .hero h1 {
-  color: var(--white);
-  margin-bottom: 0.5em;
-  font-weight: 700;
+  color: var(--white); /* White text */
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 0.5em; /* Space below the h1 */
+  margin-top: 0.5em;
+  font-size: 5rem; /* Slightly smaller */
+  font-weight: 700; /* Bold */
+  line-height: 1.2;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Deep shadow for contrast */
   /* Animation handled by JS */
 }
 
 .hero .tagline {
-  font-size: 1.3rem;
-  margin-bottom: 2em;
-  font-weight: 400;
+  font-size: 1.3rem; /* Slightly smaller */
+  line-height: 1.7;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 2em; /* Space below the tagline */
+  font-weight: 400; /* Normal weight */
   color: rgba(255, 255, 255, 0.95); /* Brighter white for contrast */
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow to boost visibility */
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Deep shadow for contrast */
 }
+
 
 .cta-button {
   display: inline-block;
@@ -377,6 +391,115 @@ section {
 .intro-value .image-content img {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+/* --- Annuities Section --- */
+.annuities-luxury {
+    background: linear-gradient(to bottom, var(--deep-forest-green), #122b1e); /* Slightly different dark green */
+}
+
+.annuities-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+}
+
+.annuities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+.annuity-details h3 {
+    margin-bottom: 1em;
+}
+
+.annuity-details ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 1.5em 0;
+}
+
+.annuity-details li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.annuity-details li::before {
+    content: '✓'; /* Checkmark */
+    color: var(--accent-gold);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+.cta-button-secondary {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    margin-top: 1em;
+}
+
+.cta-button-secondary:hover {
+    background-color: var(--accent-gold);
+    color: var(--deep-forest-green);
+}
+
+.annuity-rates h3 {
+    margin-bottom: 0.5em;
+}
+
+.rate-effective-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5em;
+}
+
+.rate-blocks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+    margin-bottom: 1.5em;
+}
+
+.rate-block {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rate-term {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.rate-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--clean-white);
+}
+
+.rate-disclaimer-luxury {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
 /* === Annuities Intro Section: Text + Rates Two-Column Layout === */
 
 .annuities-intro {
