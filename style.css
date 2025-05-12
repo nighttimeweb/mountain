@@ -1,3 +1,9 @@
+/*
+ Theme Name: Mountain Life
+ Author: Peretz Mockin
+ Version: 1.0
+ */
+
 /* --- Global Resets & Base Styles --- */
 *,
 *::before,
@@ -156,6 +162,7 @@ img {
 }
 
 /* --- Header (Desktop & Global) --- */
+
 .site-header {
   position: fixed;
   top: 0;
@@ -261,93 +268,100 @@ background-color: var(--green-light);
 color: var(--green-dark);
 }
 
+body.admin-bar .site-header {
+  top: 32px;
+}
 /* --- Mobile Header Adjustments --- */
 @media (max-width: 768px) {
-.site-header {
-  padding: 10px 0;
-}
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px 0;
+  }
 
-.site-header .container {
-  display: grid;
-  grid-template-areas:
-    "logo toggle"
-    "nav nav";
-  grid-template-columns: 1fr auto;
-  align-items: center;
-}
+  .site-header .container {
+    display: grid;
+    grid-template-areas:
+      "logo toggle"
+      "nav nav";
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
 
-.site-header .logo {
-  grid-area: logo;
-}
+  .site-header .logo {
+    grid-area: logo;
+  }
 
-.nav-toggle {
-  grid-area: toggle;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 24px;
-  height: 18px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
+  .nav-toggle {
+    grid-area: toggle;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
 
-.nav-toggle .bar {
-  height: 2px;
-  width: 100%;
-  background-color: var(--green-dark);
-  border-radius: 1px;
-}
+  .nav-toggle .bar {
+    height: 2px;
+    width: 100%;
+    background-color: var(--green-dark);
+    border-radius: 1px;
+  }
 
-.main-nav {
-  grid-area: nav;
-  display: none;
-  width: 100%;
-  text-align: center;
-  margin-top: 10px;
-}
+  .main-nav {
+    grid-area: nav;
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
 
-.main-nav.open {
-  display: block;
-}
+  .main-nav.open {
+    display: block;
+  }
 
-.main-nav ul {
-  flex-direction: column;
-  gap: 15px;
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-}
+  .main-nav ul {
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+  }
 
-.main-nav ul li {
-  margin-left: 0;
-}
+  .main-nav ul li {
+    margin-left: 0;
+  }
 
-.site-header .logo a {
-  font-size: 1.5rem;
-}
+  .site-header .logo a {
+    font-size: 1.5rem;
+  }
 
-/* Mobile dropdown overrides */
-.has-dropdown .dropdown {
-  position: static;
-  transform: none;
-  opacity: 1;
-  box-shadow: none;
-  background-color: transparent;
-  padding: 0;
-  display: none;
-}
+  .has-dropdown .dropdown {
+    position: static;
+    transform: none;
+    opacity: 1;
+    box-shadow: none;
+    background-color: transparent;
+    padding: 0;
+    display: none;
+  }
 
-.has-dropdown.open .dropdown {
-  display: block;
-}
+  .has-dropdown.open .dropdown {
+    display: block;
+  }
 
-.has-dropdown .dropdown li a {
-  padding: 8px 0;
-  color: var(--charcoal);
-  font-size: 0.95rem;
-}
+  .has-dropdown .dropdown li a {
+    padding: 8px 0;
+    color: var(--charcoal);
+    font-size: 0.95rem;
+  }
 }
 
 /* --- Hero Section --- */
@@ -361,8 +375,8 @@ color: var(--green-dark);
   text-align: center;
   color: var(--white);
   overflow: hidden;
-  /* background removed — now handled by <video> element */
 }
+
 .hero::before {
   content: "";
   position: absolute;
@@ -370,9 +384,10 @@ color: var(--green-dark);
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* This is your overlay */
+  background: rgba(0, 0, 0, 0.4); /* Overlay */
   z-index: 1;
 }
+
 .hero-video {
   position: absolute;
   top: 0;
@@ -381,49 +396,52 @@ color: var(--green-dark);
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  
 }
-
-
 
 .hero-content {
   position: relative;
   z-index: 2;
   text-align: center;
-  transform: translateY(-80px); /* 👈 Move text upward by 80px */
-  
+  transform: translateY(-80px); /* Lift text */
 }
 
-
 .hero h1 {
-  color: var(--white); /* White text */
+  color: var(--white);
   font-family: 'Playfair Display', serif;
-  margin-bottom: 0.5em; /* Space below the h1 */
+  margin-bottom: 0.5em;
   margin-top: 0.5em;
-  font-size: 5rem; /* Slightly smaller */
-  font-weight: 700; /* Bold */
+  font-size: 5rem;
+  font-weight: 700;
   line-height: 1.2;
-  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Deep shadow for contrast */
-  /* Animation handled by JS */
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* Smaller font on mobile */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .hero .tagline {
+    font-size: 1rem;
+  }
 }
 
 .hero .tagline {
-  font-size: 1.3rem; /* Slightly smaller */
+  font-size: 1.3rem;
   line-height: 1.7;
   font-family: 'Lato', sans-serif;
-  margin-bottom: 2em; /* Space below the tagline */
-  font-weight: 400; /* Normal weight */
-  color: rgba(255, 255, 255, 0.95); /* Brighter white for contrast */
-  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Deep shadow for contrast */
+  margin-bottom: 2em;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
 }
-
 
 .cta-button {
   display: inline-block;
-  background: linear-gradient(45deg, var(--green-primary), #27ae60); /* Gradient green */
+  background: linear-gradient(45deg, var(--green-primary), #27ae60);
   color: var(--white);
   padding: 15px 35px;
-  border-radius: 50px; /* Pill shape */
+  border-radius: 50px;
   font-size: 1.1rem;
   font-weight: 600;
   text-decoration: none;
@@ -438,6 +456,7 @@ color: var(--green-dark);
   box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5);
   color: var(--white);
 }
+
 
 /* --- Content Sections --- */
 section {
@@ -1328,74 +1347,84 @@ section {
   font-family: 'Poppins', sans-serif;
   background-color: #f4fdf7;
   color: #1A4D2E;
-  padding: 2rem;
+  padding: 4rem 2rem;
   box-sizing: border-box;
 }
 
 .annuity-calculator-wrapper .card {
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 2rem;
-  max-width: 1000px;
-  margin: 100px auto;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 3rem;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .annuity-calculator-wrapper h1 {
-  color: #1A4D2E;
   text-align: center;
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .annuity-calculator-wrapper .subtitle {
   text-align: center;
   color: #6B7280;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
-.annuity-calculator-wrapper .grid {
+.calculator-grid {
   display: grid;
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
 }
 
-@media (min-width: 768px) {
-  .annuity-calculator-wrapper .grid {
-    grid-template-columns: 1fr 2fr;
-  }
-}
-
-.annuity-calculator-wrapper .input-column,
-.annuity-calculator-wrapper .results-column {
+.input-column {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
+.input-column > div {
+  display: flex;
+  flex-direction: column;
+}
+
 .annuity-calculator-wrapper label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+/* Enlarged APY display */
+.annuity-calculator-wrapper label + .apy-display,
+.apy-display {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 0.3rem;
 }
 
 .annuity-calculator-wrapper input[type="number"],
+.annuity-calculator-wrapper select,
 .annuity-calculator-wrapper input[type="range"] {
-  width: 100%;
-  padding: 0.5rem;
+  padding: 0.6rem 0.75rem;
   border: 1px solid #cbd5e1;
-  border-radius: 0.375rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  background-color: #ffffff;
   box-sizing: border-box;
 }
 
 .annuity-calculator-wrapper input[type="range"] {
-  height: 0.5rem;
+  appearance: none;
+  height: 0.6rem;
   background-color: #e2e8f0;
   border-radius: 0.5rem;
-  appearance: none;
-  cursor: pointer;
   accent-color: #1A4D2E;
 }
 
@@ -1413,91 +1442,108 @@ section {
   height: 1rem;
   background: #1A4D2E;
   border-radius: 50%;
-  cursor: pointer;
   border: none;
+  cursor: pointer;
 }
 
-.annuity-calculator-wrapper .apy-display,
-.annuity-calculator-wrapper .result-value {
-  font-size: 1.875rem;
-  font-weight: bold;
-  color: #1A4D2E;
-}
-
-.annuity-calculator-wrapper .duration-label {
+.duration-label {
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
   color: #6B7280;
 }
 
-.annuity-calculator-wrapper .results-display {
+/* Radio buttons for withdrawals */
+.radio-group {
   display: flex;
-  justify-content: space-around;
-  text-align: center;
+  gap: 1rem;
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
 }
 
-.annuity-calculator-wrapper .result-label {
-  font-size: 0.875rem;
-  color: #4B5563;
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
 }
 
-.annuity-calculator-wrapper .chart-container {
-  position: relative;
-  height: 300px;
+/* Save Results button */
+#saveResultsButton {
+  margin-top: 1.5rem;
   width: 100%;
 }
 
-.annuity-calculator-wrapper .disclaimer {
+.results-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.results-display {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 2rem;
+}
+
+.results-display > div {
+  flex: 1;
+  text-align: center;
+}
+
+.result-label {
+  font-size: 0.875rem;
+  color: #4B5563;
+  margin-bottom: 0.25rem;
+}
+
+.result-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1A4D2E;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.disclaimer {
   font-size: 0.75rem;
   color: #6B7280;
   text-align: center;
   margin-top: 1rem;
 }
 
-@media (max-width: 768px) {
-  .annuity-calculator-wrapper .card {
-    margin: 1rem auto;
-    padding: 1.5rem;
-    border-radius: 12px;
-    width: 90%;
+/* === Mobile Stack View for Calculator === */
+@media (max-width: 900px) {
+  .calculator-grid {
+    grid-template-columns: 1fr;
   }
 
-  .annuity-calculator-wrapper .results-display {
+  .results-display {
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
   }
 
-  .annuity-calculator-wrapper .chart-container {
+  .chart-container {
     height: 250px;
   }
 
-  canvas#projectionChart {
-    width: 100% !important;
-    height: 100% !important;
+  .radio-group {
+    margin-bottom: 0.3rem;
   }
 
-  .annuity-calculator-wrapper input[type="number"] {
-    font-size: 1rem;
-  }
-
-  .annuity-calculator-wrapper input[type="range"] {
-    width: 100%;
-  }
-
-  .annuity-calculator-wrapper .apy-display,
-  .annuity-calculator-wrapper .result-value {
-    font-size: 1.5rem;
-  }
-
-  .annuity-calculator-wrapper h1 {
-    font-size: 1.5rem;
-  }
-
-  .annuity-calculator-wrapper .subtitle {
-    font-size: 1rem;
+  #withdrawalOptions {
+    margin-top: 0.3rem;
   }
 }
+
 /* === New Quote Page Styles === */
   
 /* === Quote Form Container as Card === */
@@ -1664,68 +1710,168 @@ section {
 
 
 /* === End Quote Page Styles === */
-@media (max-width: 768px) {
-    h1 { font-size: 2.2rem; }
-    h2 { font-size: 1.8rem; }
-    h3 { font-size: 1.4rem; }
+/* --- Responsive Design --- */
 
-    .site-header .container {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .main-nav ul {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px 20px;
-    }
-    .main-nav ul li {
-        margin-left: 0;
-    }
-
-    .hero {
-        height: auto;
-        min-height: 500px;
-        padding: 120px 0 60px; /* Adjust padding for fixed header */
-    }
-    .hero .tagline {
-        font-size: 1.1rem;
-    }
-
-    section {
-        padding: 60px 0;
-    }
-
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 35px;      
-      }
-      @media (max-width: 992px) {
-        .product-grid {
-          grid-template-columns: repeat(2, 1fr); /* 2 per row on tablets */
-        }
-      }
-      
-      @media (max-width: 600px) {
-        .product-grid {
-          grid-template-columns: 1fr; /* 1 per row on phones */
-        }
-      }
-      
-
-    .stats {
-        gap: 30px;
-    }
-
-    .secondary-cta .cta-buttons {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 20px;
-    }
-  
+/* Tablets and below (992px) */
+@media (max-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 per row on tablets */
   }
+  .calculator-grid {
+    grid-template-columns: 1fr; /* Stack calculator inputs/results */
+    gap: 2rem;
+    align-items: start;
+  }
+}
+
+/* Mobile layout tweaks (768px and below) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  .site-header .container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .main-nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+  }
+
+  .main-nav ul li {
+    margin-left: 0;
+  }
+
+  .hero {
+    height: auto;
+    min-height: 500px;
+    padding: 120px 0 60px;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem; /* Smaller hero heading for mobile */
+  }
+
+  .hero .tagline {
+    font-size: 1.1rem;
+  }
+
+  section {
+    padding: 60px 0;
+  }
+
+  .stats {
+    gap: 30px;
+  }
+
+  .secondary-cta .cta-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Phones (600px and below) */
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Further Mobile Optimizations for Annuity Calculator on very small screens */
+@media (max-width: 600px) {
+  .annuity-calculator-wrapper .card h1 {
+    font-size: 1.5rem;
+  }
+
+  .annuity-calculator-wrapper .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .annuity-calculator-wrapper .result-label {
+    font-size: 0.8rem;
+  }
+
+  .annuity-calculator-wrapper .result-value {
+    font-size: 1.1rem;
+  }
+
+  .annuity-calculator-wrapper .input-column label,
+  .annuity-calculator-wrapper .radio-group label {
+    font-size: 0.8rem;
+  }
+  
+  .annuity-calculator-wrapper .input-column input[type="number"],
+  .annuity-calculator-wrapper .input-column input[type="text"] {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+  }
+
+  .annuity-calculator-wrapper .cta-button {
+    font-size: 0.85rem;
+    padding: 8px 18px;
+  }
+}
+
+
+
+/* --- Preloader Mobile Adjustments --- */
+@media (max-width: 768px) {
+  .preloader-logo-block img {
+    width: 200px; /* Reduce logo size on mobile */
+  }
+
+  .preloader-logo-block {
+    padding: 40px; /* Reduce padding on mobile */
+    gap: 20px; /* Adjust gap */
+  }
+
+  .loading-bar {
+    width: 120px; /* Adjust loading bar width */
+  }
+}
+
+@media (max-width: 480px) {
+  .preloader-logo-block img {
+    width: 150px; /* Further reduce logo size on very small screens */
+  }
+
+  .preloader-logo-block {
+    padding: 30px; /* Further reduce padding */
+  }
+}
+
+
+
+/* --- Annuity Calculator Chart Mobile Adjustments (for very small screens) --- */
+@media (max-width: 480px) { /* Targeting screens like iPhone 12 Pro (390px) and smaller */
+  .annuity-calculator-wrapper .chart-container {
+    min-height: 250px; /* Ensure enough height for the chart to be readable */
+    max-width: 100%; /* Ensure it doesn't overflow its parent */
+    overflow-x: auto; /* Allow horizontal scroll if content still overflows, as a fallback */
+  }
+
+  .annuity-calculator-wrapper .chart-container canvas#projectionChart {
+    max-width: 100% !important; /* Override any inline styles from Chart.js if necessary */
+    height: auto !important; /* Maintain aspect ratio, let Chart.js handle height based on width */
+    /* Chart.js usually handles responsiveness well if its container is responsive */
+    /* and responsive: true, maintainAspectRatio: true (default) are set in JS */
+  }
+}
+

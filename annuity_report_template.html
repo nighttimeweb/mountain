@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mountain Life - Annuity Estimate</title>
+    <style>
+        /* Basic Professional Styling - This would need significant enhancement for an "Apple Level" feel */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            -webkit-print-color-adjust: exact; /* Important for some PDF generators to respect background colors */
+            print-color-adjust: exact;
+        }
+        .report-container {
+            width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height - for screen preview, actual PDF height will be content-based */
+            margin: 20px auto;
+            padding: 25mm 20mm; /* Standard A4 margins */
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #1A4D2E; /* Mountain Life Dark Green */
+        }
+        .header .logo-container img.logo {
+            width: 180px; /* Adjusted logo size */
+            height: auto;
+        }
+        .header .title-date-container {
+            text-align: right;
+        }
+        .header h1 {
+            font-size: 26px;
+            color: #1A4D2E; /* Mountain Life Dark Green */
+            margin: 0 0 5px 0;
+            font-weight: 600;
+        }
+        .header .date {
+            font-size: 12px;
+            color: #555;
+        }
+        .section {
+            margin-bottom: 25px;
+        }
+        .section h2 {
+            font-size: 18px;
+            color: #1A4D2E; /* Mountain Life Dark Green */
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+            gap: 10px 20px;
+        }
+        .data-item {
+            margin-bottom: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .data-label {
+            font-weight: 500;
+            color: #333;
+            display: inline-block;
+            width: 180px; /* Adjust for alignment if needed, or use flex/grid for better alignment */
+        }
+        .data-value {
+            color: #444;
+        }
+        table.results-summary-table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        table.results-summary-table td {
+            padding: 12px 0;
+            font-size: 16px;
+            border-bottom: 1px dotted #eee;
+        }
+        table.results-summary-table td.data-label {
+            font-weight: 500;
+            color: #1A4D2E;
+        }
+        table.results-summary-table td.data-value {
+            font-weight: bold;
+            font-size: 18px;
+            color: #000;
+            text-align: right;
+        }
+
+        table.annual-projection {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table.annual-projection th, table.annual-projection td {
+            border: 1px solid #e0e0e0;
+            padding: 9px 12px;
+            text-align: left;
+            font-size: 12px;
+        }
+        table.annual-projection th {
+            background-color: #f5f5f5;
+            font-weight: 500;
+            color: #333;
+        }
+        table.annual-projection td.currency {
+            text-align: right;
+        }
+        .chart-container-pdf {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            background-color: #fdfdfd;
+        }
+        .chart-container-pdf img {
+            max-width: 100%;
+            height: auto;
+        }
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container" id="pdfReportContent">
+        <div class="header">
+            <div class="logo-container">
+                <!-- Ensure Mountain_Life_Logo.png is accessible at this path or use a full URL -->
+                <img src="Mountain_Life_Logo.png" alt="Mountain Life Logo" class="logo">
+            </div>
+            <div class="title-date-container">
+                <h1>Personalized Annuity Projection</h1>
+                <div class="date">Generated: <span id="report_date">[JS_Date_Placeholder]</span></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Projection Inputs</h2>
+            <div class="data-grid">
+                <div class="data-item"><span class="data-label">Initial Investment:</span> <span class="data-value" id="input_investment_amount">[JS_Investment_Amount_Placeholder]</span></div>
+                <div class="data-item"><span class="data-label">Investment Duration:</span> <span class="data-value" id="input_investment_duration">[JS_Investment_Duration_Placeholder]</span></div>
+                <div class="data-item"><span class="data-label">Guaranteed APY:</span> <span class="data-value" id="input_apy">[JS_APY_Placeholder]</span></div>
+                <div class="data-item"><span class="data-label">Withdrawals Enabled:</span> <span class="data-value" id="input_withdrawals_enabled">[JS_Withdrawals_Enabled_Placeholder]</span></div>
+                <div id="js_withdrawal_details_placeholder_pdf" class="data-item" style="grid-column: span 2;">
+                    <!-- Dynamically populated by JS if withdrawals are enabled -->
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Projected Outcomes</h2>
+            <table class="results-summary-table">
+                <tr><td class="data-label">Projected Balance at End of Term:</td><td class="data-value" id="output_projected_balance">[JS_Projected_Balance_Placeholder]</td></tr>
+                <tr><td class="data-label">Total Interest Earned:</td><td class="data-value" id="output_total_interest">[JS_Total_Interest_Placeholder]</td></tr>
+                <tr><td class="data-label">Total Amount Withdrawn:</td><td class="data-value" id="output_total_withdrawals">[JS_Total_Withdrawals_Placeholder]</td></tr>
+            </table>
+        </div>
+
+        <div class="section" id="annual_projection_section_pdf" style="display:none;">
+            <h2>Annual Projection Details</h2>
+            <table class="annual-projection">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Starting Balance</th>
+                        <th>Interest Earned</th>
+                        <th>Withdrawals</th>
+                        <th>Ending Balance</th>
+                    </tr>
+                </thead>
+                <tbody id="annual_projection_table_body_pdf">
+                    <!-- Rows to be dynamically generated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Projected Growth Over Time</h2>
+            <div class="chart-container-pdf">
+                <img id="chart_image_placeholder_pdf" src="" alt="Projection Chart">
+                <!-- This img src will be set by JS with the chart image data URL -->
+            </div>
+        </div>
+
+        <div class="footer">
+            This projection is an estimate for illustrative purposes only and is based on the inputs provided and current rates as of the generation date. 
+            It does not constitute a guarantee, offer, or contract. Rates are subject to change. Please consult with a financial advisor for personalized advice.
+            <br>
+            Mountain Life Insurance Company &copy; <span id="footer_year">[JS_Year_Placeholder]</span>
+        </div>
+    </div>
+
+    <!-- Conceptual script for populating and triggering PDF generation -->
+    <!-- This would be integrated into your main script.js or a dedicated pdf_generator.js -->
+    <!-- You would need a library like html2pdf.js included in your main page -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> -->
+    <script>
+        // THIS IS CONCEPTUAL AND WOULD BE PART OF YOUR MAIN SCRIPT.JS
+        // FUNCTION TO BE CALLED WHEN "SAVE RESULTS" IS CLICKED
+        /*
+        async function generateAndSavePDF(calculatorData) {
+            // 1. Clone the template content (or fetch it if it's a separate file)
+            // For this example, let's assume this script is IN the template, or has access to its DOM
+            const reportContentElement = document.getElementById('pdfReportContent');
+
+            // 2. Populate the data
+            document.getElementById('report_date').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('footer_year').textContent = new Date().getFullYear();
+
+            document.getElementById('input_investment_amount').textContent = '$' + parseFloat(calculatorData.investmentAmount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('input_investment_duration').textContent = calculatorData.duration + (calculatorData.duration === 1 ? ' Year' : ' Years');
+            document.getElementById('input_apy').textContent = parseFloat(calculatorData.apy).toFixed(2) + '%';
+            document.getElementById('input_withdrawals_enabled').textContent = calculatorData.withdrawalsEnabled ? 'Yes' : 'No';
+
+            const withdrawalDetailsDivPdf = document.getElementById('js_withdrawal_details_placeholder_pdf');
+            if (calculatorData.withdrawalsEnabled) {
+                let withdrawalHtml = '<span class="data-label">Free Withdrawal Rider:</span> <span class="data-value">' + (calculatorData.freeWithdrawalRider ? 'Yes (10% Free Withdrawal)' : 'No (5% Standard)') + '</span><br>';
+                withdrawalHtml += '<span class="data-label">Annual Withdrawal %:</span> <span class="data-value">' + parseFloat(calculatorData.withdrawalPct * 100).toFixed(2) + '%</span>';
+                withdrawalDetailsDivPdf.innerHTML = withdrawalHtml;
+                withdrawalDetailsDivPdf.style.display = 'block';
+            } else {
+                withdrawalDetailsDivPdf.innerHTML = '';
+                withdrawalDetailsDivPdf.style.display = 'none';
+            }
+
+            document.getElementById('output_projected_balance').textContent = '$' + parseFloat(calculatorData.projectedBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('output_total_interest').textContent = '$' + parseFloat(calculatorData.totalInterest).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('output_total_withdrawals').textContent = '$' + parseFloat(calculatorData.totalWithdrawals).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Populate Annual Projection Table if data exists
+            const tableBodyPdf = document.getElementById('annual_projection_table_body_pdf');
+            const annualSectionPdf = document.getElementById('annual_projection_section_pdf');
+            tableBodyPdf.innerHTML = ''; // Clear existing rows
+            if (calculatorData.annualProjection && calculatorData.annualProjection.length > 0) {
+                calculatorData.annualProjection.forEach(yearData => {
+                    const row = tableBodyPdf.insertRow();
+                    row.insertCell().textContent = yearData.year;
+                    row.insertCell().textContent = '$' + parseFloat(yearData.startingBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    row.insertCell().textContent = '$' + parseFloat(yearData.interestEarned).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    row.insertCell().textContent = '$' + parseFloat(yearData.withdrawals).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    row.insertCell().textContent = '$' + parseFloat(yearData.endingBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                });
+                annualSectionPdf.style.display = 'block';
+            } else {
+                annualSectionPdf.style.display = 'none';
+            }
+            
+            // 3. Add Chart Image
+            // Assuming your main script has a way to get the chart as a Data URL
+            // const chartCanvas = document.getElementById('projectionChart'); // from the main page
+            // const chartDataUrl = chartCanvas.toDataURL('image/png');
+            document.getElementById('chart_image_placeholder_pdf').src = calculatorData.chartDataUrl; // Pass this in calculatorData
+
+            // 4. Use html2pdf.js to generate and save the PDF
+            const pdfFilename = 'Mountain_Life_Annuity_Estimate_' + new Date().toISOString().slice(0,10) + '.pdf';
+            const opt = {
+                margin:       [10, 10, 10, 10], //mm [top, left, bottom, right]
+                filename:     pdfFilename,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            // html2pdf().from(reportContentElement).set(opt).save(); // Requires html2pdf.js library
+            alert('PDF generation initiated (conceptual). Developer needs to integrate html2pdf.js or similar.');
+        }
+        */
+    </script>
+</body>
+</html>
+

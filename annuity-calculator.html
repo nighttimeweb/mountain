@@ -36,7 +36,6 @@
               <li><a href="annuity-calculator.html">Annuity Calculator</a></li>
             </ul>
           </li>
-       
           <li><a href="index.html#contact">Contact Us</a></li>
           <li class="has-dropdown" data-dropdown>
             <a href="#">Agent Resources</a>
@@ -54,34 +53,54 @@
     <div class="card">
       <h1>Annuity Payout Calculator</h1>
       <p class="subtitle">Estimate how your money can grow with our annuity payout calculator.</p>
-      <div class="grid">
+
+      <div class="calculator-grid">
+        <!-- Input Column -->
         <div class="input-column">
           <div>
             <label>APY (Rate varies by duration)</label>
             <div class="apy-display" id="apyDisplay">5.75%</div>
           </div>
+
           <div>
-            <label for="investmentAmount">Investment amount ($1,000 - $1,000,000)</label>
-            <input
-              type="number"
-              id="investmentAmount"
-              value="50000"
-              min="1000"
-              max="1000000"
-            />
+            <label for="investmentAmount">Investment amount ($1,000 - $100,000,000)</label>
+            <input type="number" id="investmentAmount" value="50000" min="1000" max="100000000" />
           </div>
+
+          <div>
+            <label>Withdrawals?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="withdrawalsEnabled" value="N" checked> No</label>
+              <label><input type="radio" name="withdrawalsEnabled" value="Y"> Yes</label>
+            </div>
+          </div>
+
+          <div id="withdrawalOptions" style="display: none;">
+            <div>
+              <label for="freeWithdrawalRider">Free Withdrawal Rider?</label>
+              <select id="freeWithdrawalRider">
+                <option value="Y">Yes (10% Free Withdrawal)</option>
+                <option value="N">No (5% Standard)</option>
+              </select>
+            </div>
+            <div>
+              <label for="freeWithdrawalPct">Withdrawal Percentage (Annual)</label>
+              <input type="number" id="freeWithdrawalPct" value="10" min="1" max="15" />%
+            </div>
+          </div>
+
           <div>
             <label for="investmentDuration">Investment duration</label>
-            <input
-              type="range"
-              id="investmentDuration"
-              min="1"
-              max="10"
-              value="5"
-            />
+            <input type="range" id="investmentDuration" min="1" max="10" value="5" />
             <div class="duration-label" id="durationLabel">5 years</div>
           </div>
+
+          <div>
+            <button class="cta-button" id="saveResultsButton" type="button">💾 Save Results</button>
+          </div>
         </div>
+
+        <!-- Results Column -->
         <div class="results-column">
           <div class="results-display">
             <div>
@@ -89,8 +108,12 @@
               <div class="result-value" id="totalInterest">$0.00</div>
             </div>
             <div>
-              <div class="result-label">Projected account balance</div>
+              <div class="result-label">Projected balance</div>
               <div class="result-value" id="projectedBalance">$0.00</div>
+            </div>
+            <div>
+              <div class="result-label">Total withdrawals</div>
+              <div class="result-value" id="totalWithdrawals">$0.00</div>
             </div>
           </div>
           <div class="chart-container">
@@ -117,8 +140,69 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- PDF Template (Hidden) -->
+  <template id="pdfReportTemplate">
+    <div class="report-container" id="pdfReportContent">
+      <div class="header">
+        <div class="logo-container">
+          <img src="http://localhost/Mountain-Life/wp-content/uploads/2025/05/Mountain_Life_Logo.png" alt="Mountain Life Logo" class="logo">
+        </div>
+        <div class="title-date-container">
+          <h1>Personalized Annuity Projection</h1>
+          <div class="date">Generated: <span id="report_date">[JS_Date_Placeholder]</span></div>
+        </div>
+      </div>
+      <div class="section">
+        <h2>Projection Inputs</h2>
+        <div class="data-grid">
+          <div class="data-item"><span class="data-label">Initial Investment:</span> <span class="data-value" id="input_investment_amount"></span></div>
+          <div class="data-item"><span class="data-label">Investment Duration:</span> <span class="data-value" id="input_investment_duration"></span></div>
+          <div class="data-item"><span class="data-label">Guaranteed APY:</span> <span class="data-value" id="input_apy"></span></div>
+          <div class="data-item"><span class="data-label">Withdrawals Enabled:</span> <span class="data-value" id="input_withdrawals_enabled"></span></div>
+          <div id="js_withdrawal_details_placeholder_pdf" class="data-item" style="grid-column: span 2;"></div>
+        </div>
+      </div>
+      <div class="section">
+        <h2>Projected Outcomes</h2>
+        <table class="results-summary-table">
+          <tr><td class="data-label">Projected Balance at End of Term:</td><td class="data-value" id="output_projected_balance"></td></tr>
+          <tr><td class="data-label">Total Interest Earned:</td><td class="data-value" id="output_total_interest"></td></tr>
+          <tr><td class="data-label">Total Amount Withdrawn:</td><td class="data-value" id="output_total_withdrawals"></td></tr>
+        </table>
+      </div>
+      <div class="section" id="annual_projection_section_pdf" style="display:none;">
+        <h2>Annual Projection Details</h2>
+        <table class="annual-projection">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Starting Balance</th>
+              <th>Interest Earned</th>
+              <th>Withdrawals</th>
+              <th>Ending Balance</th>
+            </tr>
+          </thead>
+          <tbody id="annual_projection_table_body_pdf"></tbody>
+        </table>
+      </div>
+      <div class="section">
+        <h2>Projected Growth Over Time</h2>
+        <div class="chart-container-pdf">
+          <img id="chart_image_placeholder_pdf" src="" alt="Projection Chart">
+        </div>
+      </div>
+      <div class="footer">
+        This projection is an estimate for illustrative purposes only and is based on the inputs provided and current rates as of the generation date. 
+        It does not constitute a guarantee, offer, or contract. Rates are subject to change. Please consult with a financial advisor for personalized advice.
+        <br>
+        Mountain Life Insurance Company &copy; <span id="footer_year">[JS_Year_Placeholder]</span>
+      </div>
+    </div>
+  </template>
+
+  <!-- Required Scripts -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
